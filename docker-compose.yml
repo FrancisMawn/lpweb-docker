@@ -1,0 +1,48 @@
+version: '2'
+
+services:
+    web:
+      image: lpweb:latest
+      build: .
+      ports:
+        - 80:80
+      volumes:
+        - lpweb-logs:/var/log
+        - lpweb-data:/usr/share/nginx
+      links:
+        - postgres
+      # env vars are replaced in .env
+      environment:
+        # Set locale to UTF-8 (https://oncletom.io/2015/docker-encoding/)
+        LANG: C.UTF-8
+
+        # REDIS is linked
+        REDIS_HOST: redis
+        REDIS_PORT_6379_TCP: tcp://redis:6379
+
+        # DB is linked
+        DB_DRIVER: pgsql
+        DB_SERVER: postgres
+        DB_DATABASE: lpweb
+        DB_PASSWORD: secret
+        PGPASSWORD: secret
+        DB_SCHEMA: public
+        DB_PORT: '5432'
+        DB_USER: lpweb
+        LANG: C.UTF-8
+
+    postgres:
+      image: postgres:11.7
+      environment:
+        POSTGRES_USER: lpweb
+        POSTGRES_PASSWORD: secret
+        POSTGRES_DB: lpweb
+        POSTGRES_INITDB_ARGS: "-E UTF8"
+      volumes:
+        # Persistent data
+        - postgresql-data:/var/lib/postgresql/data
+
+volumes:
+  lpweb-data:
+  lpweb-logs:
+  postgresql-data:
