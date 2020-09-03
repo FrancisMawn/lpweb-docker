@@ -12,7 +12,7 @@ The intent of this project is to allow for an easy deployment of a [LP-WEB](http
 - Clone this repository:  
     `cd /path/to/your/projects`  
     `git clone https://github.com/FrancisMawn/lpweb-docker.git`
-- Within the project directory, build the Docker images and containers:
+- Within the project directory, build the Docker images and containers:  
     `docker-compose up -d`  
 - Browse to http://localhost/
 
