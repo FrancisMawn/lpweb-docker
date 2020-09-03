@@ -9,12 +9,16 @@ The intent of this project is to allow for an easy deployment of a [LP-WEB](http
 ---
 
 ## Setup the Docker images and containers
-- Clone this repository:  
-    `cd /path/to/your/projects`  
-    `git clone https://github.com/FrancisMawn/lpweb-docker.git`
-- Within the project directory, build the Docker images and containers:  
-    `docker-compose up -d`  
-- Browse to http://localhost/
+1. Clone this repository:
+    ```shell
+    $ cd /path/to/your/projects
+    $ git clone https://github.com/FrancisMawn/lpweb-docker.git`
+    ```
+2. Within the project directory, build the Docker images and containers:
+    ```shell
+    $ docker-compose up -d
+    ```
+3. Browse to http://localhost/
 
 If everything went fine, you should now have an instance of LP-WEB running into its own container. 
 
@@ -24,15 +28,22 @@ If everything went fine, you should now have an instance of LP-WEB running into 
 The first time you instantiate the container, you will need to install the application.  
 Follow these steps:
 
-- Open a shell to run commands inside the application container:  
-    `docker exec -ti lpweb-docker_web_1 sh`  
-- Run the CraftCMS installation command:  
-    `./craft install`  
-- Run the content migrations:  
-    `./craft migrate/all`  
-- Import course entries:  
-    `./craft feed-me/feeds/run --id=1,2`
-
+1. Open a shell to run commands inside the application container:
+    ```shell
+    $ docker exec -ti lpweb-docker_web_1 sh
+    ```
+2. Run the CraftCMS installation command:
+    ```shell
+    $ ./craft install
+    ```
+3. Run the content migrations:
+    ```shell
+    $ ./craft migrate/all
+    ```
+4. Import the course entries (this may take a while):
+    ```shell
+    $ ./craft feed-me/feeds/run --id=1,2
+    ```
 The application is now installed and configured, ready to be used!
 
 ---
