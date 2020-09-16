@@ -1,6 +1,8 @@
 # Start from a nginx/php7.4 pre-defined image.
 FROM wyveo/nginx-php-fpm:php74
 
+ARG branch
+
 # Remove existing webroot, configure PHP, install postgresql-client (pg_dump) and nodejs/npm.
 RUN rm -rf /usr/share/nginx/* && \
     sed -i -e "s/memory_limit\s*=\s*.*/memory_limit = 256M/g" ${php_conf} && \
@@ -15,20 +17,27 @@ RUN rm -rf /usr/share/nginx/* && \
 RUN composer global require hirak/prestissimo
 
 # Add default craft cms nginx config.
-ADD ./default.conf /etc/nginx/conf.d/default.conf
+COPY ./config/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 # Get lp-web code from git.
-RUN git clone https://csps-efpc-ux@dev.azure.com/csps-efpc-ux/learning-platform/_git/lp-web /usr/share/nginx/
-
-# Setup nginx permissions.
-RUN chown -Rf nginx:nginx /usr/share/nginx/
+RUN git clone -b $branch https://csps-efpc-ux@dev.azure.com/csps-efpc-ux/learning-platform/_git/lp-web /usr/share/nginx/
 
 # Copy environment file.
-ADD .env.sample /usr/share/nginx/.env
+COPY ./config/craftcms/.env.sample /usr/share/nginx/.env
+
+# Copy Craft installation script.
+COPY ./install-craft.sh /usr/share/nginx/install-craft.sh
 
 # Install composer and npm dependencies.
 WORKDIR /usr/share/nginx
 RUN composer install
 RUN npm install && npm run dev
+
+# Remove unnecessary files
+RUN rm -rf ./node_modules
+RUN rm -rf ./src
+
+# Setup nginx permissions.
+RUN chown -Rf nginx:nginx /usr/share/nginx/
 
 EXPOSE 80
