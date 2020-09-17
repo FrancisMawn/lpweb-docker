@@ -12,15 +12,18 @@ The intent of this project is to allow for an easy deployment of a [LP-WEB](http
 1. Clone this repository:
     ```shell
     $ cd /path/to/your/projects
-    $ git clone https://github.com/FrancisMawn/lpweb-docker.git`
+    $ git clone https://github.com/FrancisMawn/lpweb-docker.git
     ```
 
 2. Copy the `.env.sample` file to `.env` and edit its content to your liking.
+    ```shell
+    $ cp .env.sample .env
+    ```
 
 3. Within the project directory, build the Docker images and containers:
     ```shell
-    $ sh docker-build.sh
+    $ ./docker-build.sh
     ```
-3. Browse to http://localhost:port/
+4. Browse to http://localhost:port/
 
 If everything went fine, you should now have an instance of LP-WEB running into its own container. 

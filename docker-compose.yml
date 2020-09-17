@@ -2,11 +2,12 @@ version: '2'
 
 services:
     web:
-      image: "lpweb:${BRANCH}"
+      image: "lpweb:${LPWEB_BRANCH}"
       build:
         context: .
         args:
-          - branch=${BRANCH}
+          - repo=${LPWEB_REPO}
+          - branch=${LPWEB_BRANCH}
       ports:
         - ${PORT}:80
       volumes:
