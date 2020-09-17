@@ -9,16 +9,20 @@ if ! git config remote.lpweb.url > /dev/null; then
 fi
 
 # Fetch all branches from lpweb repository.
+git fetch lpweb > /dev/null 2>&1
 ALL_BRANCHES=()
 LPWEB_BRANCHES=()
 eval "$(git for-each-ref --shell --format='ALL_BRANCHES+=(%(refname:short))')"
 for B in "${ALL_BRANCHES[@]}"; do
-    if [[ $B =~ "lpweb" ]]; then
-        LPWEB_BRANCHES+=(${B:6})
-    fi
+    [[ $B =~ "lpweb" ]] && LPWEB_BRANCHES+=(${B:6})
 done
+if [ ${#LPWEB_BRANCHES[@]} -eq 0 ]; then
+    echo "Could not find any branches to build from."
+    echo "Repo: ${LPWEB_REPO}"
+    exit 1;
+fi
 
-# Choose branch to build from.
+# Ask which branch to build from.
 PS3="?): "
 echo "Select a branch to build from:"
 select BUILD_BRANCH in ${LPWEB_BRANCHES[@]}; do
