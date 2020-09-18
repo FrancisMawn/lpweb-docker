@@ -9,7 +9,7 @@ if ! git config remote.lpweb.url > /dev/null; then
 fi
 
 # Fetch all branches from lpweb repository.
-git fetch lpweb > /dev/null 2>&1
+git fetch lpweb --prune > /dev/null 2>&1
 ALL_BRANCHES=()
 LPWEB_BRANCHES=()
 eval "$(git for-each-ref --shell --format='ALL_BRANCHES+=(%(refname:short))')"
