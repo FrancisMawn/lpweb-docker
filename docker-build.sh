@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Import variables from .env file.
-export $(cat .env | sed 's/#.*//g' | xargs)
+source ".env"
 
 # Add lpweb git repository.
 if ! git config remote.lpweb.url > /dev/null; then
