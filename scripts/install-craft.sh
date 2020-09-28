@@ -4,6 +4,7 @@
 # Install craft using admin credentials defined in the .env file.
 ./craft install \
     --interactive=0 \
+    --site-name="$SITE_NAME" \
     --email="$ADMIN_EMAIL" \
     --username="$ADMIN_USERNAME" \
     --password="$ADMIN_PASSWORD" \
