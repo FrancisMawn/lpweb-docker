@@ -62,7 +62,7 @@ fi
 
 echo
 echo "Build the application services ..."
-docker-compose build --force --quiet
+docker-compose build --pull --quiet
 
 echo
 echo "Instantiate the application containers ..."
@@ -70,7 +70,7 @@ docker-compose up -d
 
 echo
 echo "Installing CraftCMS ..."
-docker exec -u nginx lpweb-docker_web_1 sh "/usr/share/nginx/install-craft.sh"
+docker-compose exec -u nginx -T web sh "/usr/share/nginx/install-craft.sh"
 
 echo
 echo "Application is up and running on branch [$LPWEB_BRANCH]."
